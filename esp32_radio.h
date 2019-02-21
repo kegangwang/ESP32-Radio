@@ -1,7 +1,12 @@
 //***************************************************************************************************
-//*  ESP32_Radio -- Webradio receiver for ESP32, VS1053 MP3 module and optional display.            *
-//*                 By Ed Smallenburg.                                                              *
+//*  ESP32 base ESP32_Radio By Ed Smallenburg .ESP32 mp3?                                                     *
+//*  Split to more module.ESP32_Radio only one of them.                                            *
 //***************************************************************************************************
+#pragma once
+#define DEF_OPTION_VS1053     1
+#define DEF_OPTION_HTTPD      1
+
+
 // ESP32 libraries used:
 //  - WiFiMulti
 //  - nvs
@@ -214,7 +219,7 @@
 // Forward declaration and prototypes of various functions.                                        *
 //**************************************************************************************************
 void        displaytime ( const char* str, uint16_t color = 0xFFFF ) ;
-void        showstreamtitle ( const char* ml, bool full = false ) ;
+void        showstreamtitle ( const char* ml, bool full ) ;
 void        handlebyte_ch ( uint8_t b ) ;
 void        handleFSf ( const String& pagename ) ;
 void        handleCmd()  ;
@@ -420,14 +425,6 @@ extern uint8_t                 namespace_ID ;                   // Namespace ID 
 extern char                    nvskeys[MAXKEYS][16] ;           // Space for NVS keys
 extern std::vector<keyname_t> keynames ;                        // Keynames in NVS
 // Rotary encoder stuff
-#define sv DRAM_ATTR static volatile
-extern sv uint16_t       clickcount ;                       // Incremented per encoder click
-extern sv int16_t        rotationcount ;                    // Current position of rotary switch
-extern sv uint16_t       enc_inactivity ;                   // Time inactive
-extern sv bool           singleclick  ;                  // True if single click detected
-extern sv bool           doubleclick  ;                  // True if double click detected
-extern sv bool           tripleclick  ;                  // True if triple click detected
-extern sv bool           longclick  ;                    // True if longclick detected
 enum enc_menu_t { VOLUME, PRESET, TRACK } ;              // State for rotary encoder menu
 extern enc_menu_t        enc_menu_mode ;               // Default is VOLUME mode
 
@@ -442,48 +439,7 @@ struct progpin_struct                                    // For programmable inp
   bool           cur ;                                   // Current state, true = HIGH, false = LOW
 } ;
 
-extern progpin_struct   progpin[] =                             // Input pins and programmed function
-{
-  {  0, false, false,  "", false },
-  //{  1, true,  false,  "", false },                    // Reserved for TX Serial output
-  {  2, false, false,  "", false },
-  //{  3, true,  false,  "", false },                    // Reserved for RX Serial input
-  {  4, false, false,  "", false },
-  {  5, false, false,  "", false },
-  //{  6, true,  false,  "", false },                    // Reserved for FLASH SCK
-  //{  7, true,  false,  "", false },                    // Reserved for FLASH D0
-  //{  8, true,  false,  "", false },                    // Reserved for FLASH D1
-  //{  9, true,  false,  "", false },                    // Reserved for FLASH D2
-  //{ 10, true,  false,  "", false },                    // Reserved for FLASH D3
-  //{ 11, true,  false,  "", false },                    // Reserved for FLASH CMD
-  { 12, false, false,  "", false },
-  { 13, false, false,  "", false },
-  { 14, false, false,  "", false },
-  { 15, false, false,  "", false },
-  { 16, false, false,  "", false },                      // May be UART 2 RX for Nextion
-  { 17, false, false,  "", false },                      // May be UART 2 TX for Nextion
-  { 18, false, false,  "", false },                      // Default for SPI CLK
-  { 19, false, false,  "", false },                      // Default for SPI MISO
-  //{ 20, true,  false,  "", false },                    // Not exposed on DEV board
-  { 21, false, false,  "", false },                      // Also Wire SDA
-  { 22, false, false,  "", false },                      // Also Wire SCL
-  { 23, false, false,  "", false },                      // Default for SPI MOSI
-  //{ 24, true,  false,  "", false },                    // Not exposed on DEV board
-  { 25, false, false,  "", false },
-  { 26, false, false,  "", false },
-  { 27, false, false,  "", false },
-  //{ 28, true,  false,  "", false },                    // Not exposed on DEV board
-  //{ 29, true,  false,  "", false },                    // Not exposed on DEV board
-  //{ 30, true,  false,  "", false },                    // Not exposed on DEV board
-  //{ 31, true,  false,  "", false },                    // Not exposed on DEV board
-  { 32, false, false,  "", false },
-  { 33, false, false,  "", false },
-  { 34, false, false,  "", false },                      // Note, no internal pull-up
-  { 35, false, false,  "", false },                      // Note, no internal pull-up
-  //{ 36, true,  false,  "", false },                    // Reserved for ADC battery level
-  { 39, false,  false,  "", false },                     // Note, no internal pull-up
-  { -1, false, false,  "", false }                       // End of list
-} ;
+extern progpin_struct   progpin[];                             // Input pins and programmed function
 
 struct touchpin_struct                                   // For programmable input pins
 {
@@ -495,21 +451,7 @@ struct touchpin_struct                                   // For programmable inp
   bool           cur ;                                   // Current state, true = HIGH, false = LOW
   int16_t        count ;                                 // Counter number of times low level
 } ;
-extern touchpin_struct   touchpin[] =                           // Touch pins and programmed function
-{
-  {   4, false, false, "", false, 0 },                   // TOUCH0
-  {   0, true,  false, "", false, 0 },                   // TOUCH1, reserved for BOOT button
-  {   2, false, false, "", false, 0 },                   // TOUCH2
-  {  15, false, false, "", false, 0 },                   // TOUCH3
-  {  13, false, false, "", false, 0 },                   // TOUCH4
-  {  12, false, false, "", false, 0 },                   // TOUCH5
-  {  14, false, false, "", false, 0 },                   // TOUCH6
-  {  27, false, false, "", false, 0 },                   // TOUCH7
-  {  33, false, false, "", false, 0 },                   // TOUCH8
-  {  32, false, false, "", false, 0 },                   // TOUCH9
-  {  -1, false, false, "", false, 0 }                    // End of list
-  // End of table
-} ;
+extern touchpin_struct   touchpin[];                           // Touch pins and programmed function
 
 
 

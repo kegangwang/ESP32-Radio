@@ -440,6 +440,7 @@ void displayvolume()
 //**************************************************************************************************
 // Dummy routine for this type of display.                                                         *
 //**************************************************************************************************
-void displaytime ( const char* str, uint16_t color )
-{
-}
+//BY WKG complipce
+//void displaytime ( const char* str, uint16_t color )
+//{
+//}

@@ -69,5 +69,3 @@ void displayvolume()
 void displaytime ( const char* str, uint16_t color )
 {
 }
-
-

@@ -129,7 +129,7 @@ void displayvolume()
 // An empty string will force a refresh on next call.                                              *
 // A character on the screen is 8 pixels high and 6 pixels wide.                                   *
 //**************************************************************************************************
-void displaytime ( const char* str, uint16_t color )
+void displaytime ( const char* str, uint16_t color = 0xFFFF )
 {
   static char oldstr[9] = "........" ;             // For compare
   uint8_t     i ;                                  // Index in strings
@@ -159,5 +159,3 @@ void displaytime ( const char* str, uint16_t color )
     }
   }
 }
-
-

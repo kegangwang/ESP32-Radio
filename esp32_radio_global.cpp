@@ -101,28 +101,11 @@ uint32_t                nvshandle = 0 ;                  // Handle for nvs acces
 uint8_t                 namespace_ID ;                   // Namespace ID found
 char                    nvskeys[MAXKEYS][16] ;           // Space for NVS keys
 std::vector<keyname_t> keynames ;                        // Keynames in NVS
-// Rotary encoder stuff
-#define sv DRAM_ATTR static volatile
-sv uint16_t       clickcount = 0 ;                       // Incremented per encoder click
-sv int16_t        rotationcount = 0 ;                    // Current position of rotary switch
-sv uint16_t       enc_inactivity = 0 ;                   // Time inactive
-sv bool           singleclick = false ;                  // True if single click detected
-sv bool           doubleclick = false ;                  // True if double click detected
-sv bool           tripleclick = false ;                  // True if triple click detected
-sv bool           longclick = false ;                    // True if longclick detected
 //enum enc_menu_t { VOLUME, PRESET, TRACK } ;              // State for rotary encoder menu
 enc_menu_t        enc_menu_mode = VOLUME ;               // Default is VOLUME mode
 
 //
-struct progpin_struct                                    // For programmable input pins
-{
-  int8_t         gpio ;                                  // Pin number
-  bool           reserved ;                              // Reserved for connected devices
-  bool           avail ;                                 // Pin is available for a command
-  String         command ;                               // Command to execute when activated
-  // Example: "uppreset=1"
-  bool           cur ;                                   // Current state, true = HIGH, false = LOW
-} ;
+//struct progpin_struct;                                    // For programmable input pins
 
 progpin_struct   progpin[] =                             // Input pins and programmed function
 {
@@ -167,16 +150,7 @@ progpin_struct   progpin[] =                             // Input pins and progr
   { -1, false, false,  "", false }                       // End of list
 } ;
 
-struct touchpin_struct                                   // For programmable input pins
-{
-  int8_t         gpio ;                                  // Pin number GPIO
-  bool           reserved ;                              // Reserved for connected devices
-  bool           avail ;                                 // Pin is available for a command
-  String         command ;                               // Command to execute when activated
-  // Example: "uppreset=1"
-  bool           cur ;                                   // Current state, true = HIGH, false = LOW
-  int16_t        count ;                                 // Counter number of times low level
-} ;
+//struct touchpin_struct;                                   // For programmable input pins
 touchpin_struct   touchpin[] =                           // Touch pins and programmed function
 {
   {   4, false, false, "", false, 0 },                   // TOUCH0
